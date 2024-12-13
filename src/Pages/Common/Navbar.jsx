@@ -2,36 +2,37 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../../AuthProvider/AuthContext';
 import { toast } from 'react-toastify';
+import logo from '../../assets/Icons/logo-50.png'
 
 const Navbar = () => {
 
-    const { user } = useContext(AuthContext)
+    const { user , logout } = useContext(AuthContext)
 
-    const handleSignOut = () =>{
+    const handleSignOut = () => {
         logout()
-        .then(()=>{
-            toast.success('Logged out successfully')
-        })
-        .catch(err => {
-            toast.error("Something went wrong, try again later")
-        })
+            .then(() => {
+                toast.success('Logged out successfully')
+            })
+            .catch(err => {
+                toast.error("Something went wrong, try again later")
+            })
     }
 
     const links =
         <>
-            <li><a>Item 1</a></li>
-            <li><a>Item 2</a></li>
-            <li><a>Item 3</a></li>
+            <Link to={'/'}> Home </Link>
+            <Link to={'/'}> Home </Link>
+            <Link to={'/'}> Home </Link>
         </>
     return (
         <div>
-            <div className="navbar bg-base-100">
+            <div className="navbar max-w-screen-xl mx-auto">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
-                                className="h-5 w-5"
+                                className="h-5 w-5 -mx-8"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor">
@@ -48,7 +49,10 @@ const Navbar = () => {
                             {links}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">daisyUI</a>
+                    <div className='flex'>
+                        <img className='w-8 h-8 my-auto' src={logo} alt="" />
+                        <a className="btn btn-ghost text-xl -ml-4">Job Portal</a>
+                    </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">

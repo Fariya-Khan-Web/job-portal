@@ -1,40 +1,70 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../AuthProvider/AuthContext';
 import { Link } from 'react-router-dom';
-import lottieAni from '../../assets/animation/lotti.json'
+import ReglottieAni from '../../assets/animation/register-lottie.json'
 import Lottie from 'lottie-react';
 import { toast } from 'react-toastify';
 
 
+
 const Register = () => {
 
-    const { user, setUser, loginGoogle } = useContext(AuthContext)
+    const { user, setUser, loginGoogle, createUser, setLoading } = useContext(AuthContext)
 
 
     const handleSubmit = e => {
-        e.prerventDefault()
-        const form = form.target
+        e.preventDefault()
+        const form = e.target
         const email = form.email.value
         const password = form.password.value
         const user = { email, password }
+
         console.log(user)
 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+
+        if (!/^.{6,}$/.test(password)) {
+            toast.error('password must contain at least 6 characters', {position: 'top-center'})
+            return 
+        }
+        if (!/[a-z]/.test(password)) {
+            toast.error('password must contain at least 1 lowercase', {position: 'top-center'})
+            return 
+        }
+        if (!/[A-Z]/.test(password)) {
+            toast.error('password must contain at least 1 uppercase', {position: 'top-center'})
+            return 
+        }
+
+        createUser(email, password)
+            .then(result => {
+                setUser(result.user)
+                setLoading(false)
+                toast.success('Registered successfully', {position: 'top-center'})
+            })
+            .catch(err => {
+                console.log(err)
+                toast.error('Something went wrong, try again later', {position: 'top-center'})
+            })
+        }
         
-    }
-
-
-    const handleGoogle = () => {
-        loginGoogle()
+        
+        const handleGoogle = () => {
+            loginGoogle()
             .then(result => {
                 console.log(result.user)
                 setUser(result.user)
+                setLoading(false)
                 toast.success('logged in successfuly')
             })
             .catch(err => { console.log(err) })
     }
     return (
-        <div className=' flex justify-center items-center py-40'>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className=' md:flex flex-row-reverse justify-center items-center pb-16 md:py-40'>
+            <div>
+                <Lottie className='w-96 px-10 mx-auto m-6' animationData={ReglottieAni} loop={true} />
+            </div>
+            <div className="card bg-base-100 w-[90%] max-w-md mx-auto md:mx-0 shrink-0 shadow-2xl">
                 <h1 className='text-2xl font-semibold mx-auto my-6'>Register your account</h1>
                 <hr className='w-10/12 mx-auto' />
                 <form onSubmit={handleSubmit} className="card-body">
@@ -49,20 +79,16 @@ const Register = () => {
                             <span className="label-text">Password</span>
                         </label>
                         <input type="password" name='password' placeholder="password" className="input input-bordered" required />
-                        <label className="label">
-                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                        </label>
+                        
                     </div>
                     <div className="form-control mt-6">
                         <button className="btn btn-primary">Sing up</button>
                     </div>
                 </form>
-                <button onClick={handleGoogle} className="btn btn-primary -mt-5 w-10/12 mx-auto">Sign up with Google</button>
+                <button onClick={handleGoogle} className="btn btn-primary -mt-5 w-[86%] mx-auto">Sign up with Google</button>
                 <p className='mx-auto my-4'>Already have an account? <Link to={'/login'} className='text-blue-500'>Login</Link></p>
             </div>
-            <div>
-                <Lottie className='w-96 ' animationData={lottieAni} loop={true} />
-            </div>
+            
         </div>
     );
 };
