@@ -6,32 +6,36 @@ import Main from "../Layouts/Main";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
+import JobDetails from "../Pages/AllJobs/JobDetails";
+import { param } from "motion/react-client";
+import PrivateRoute from "../Pages/Private/PrivateRoute";
 
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Main/>,
+        element: <Main />,
         errorElement: <h1 className="text-5xl font-semibold mx-auto">Route not found</h1>,
         children: [
             {
                 path: '/',
-                element: <Home/>
+                element: <Home />
             },
             {
                 path: '/login',
-                element: <Login/>
+                element: <Login />
             },
             {
                 path: '/register',
-                element: <Register/>
+                element: <Register />
             },
             {
-                path: '/',
-                element: <Home/>
+                path: '/jobs/:id',
+                loader: ({ params }) => fetch(`http://localhost:5000/jobs/${params.id}`),
+                element: <PrivateRoute>< JobDetails /></PrivateRoute>
             },
 
-            
+
         ]
     },
 ]);
