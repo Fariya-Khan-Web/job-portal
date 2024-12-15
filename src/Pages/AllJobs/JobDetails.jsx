@@ -1,10 +1,10 @@
 import React from 'react';
-import { useLoaderData, useParams } from 'react-router-dom';
+import { Link, useLoaderData, useParams } from 'react-router-dom';
 
 const JobDetails = () => {
 
     const data = useLoaderData()
-    const { title, location, jobType, category, applicationDeadline, salaryRange, description, responsibilities, status, hr_email, hr_nam, company_logo } = data
+    const {_id, title, location, jobType, category, applicationDeadline, salaryRange, description, responsibilities, status, hr_email, hr_nam, company_logo } = data
 
     console.log(data)
     return (
@@ -14,7 +14,9 @@ const JobDetails = () => {
 
                     {title}
                 </h1>
-                <button className='btn bg-purple-600 text-white'>Apply</button>
+                <Link to={`/jobApply/${_id}`}>
+                    <button className='btn bg-purple-600 text-white w-full'>Apply</button>
+                </Link>
             </div>
         </div>
     );

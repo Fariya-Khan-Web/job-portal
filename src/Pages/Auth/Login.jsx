@@ -1,16 +1,19 @@
 import Lottie from 'lottie-react';
 import React, { useContext } from 'react';
 import lottieAni from '../../assets/animation/lotti.json'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../../AuthProvider/AuthContext';
 import { toast } from 'react-toastify';
 
 const Login = () => {
 
     const { setUser, loginEmailPass, setLoading } = useContext(AuthContext)
+    const location = useLocation()
+    console.log(location)
+    const navigate = useNavigate()
 
     const handleSubmit = e => {
-        e.prerventDefault()
+        e.preventDefault()
         const form = e.target
         const email = form.email.value
         const password = form.password.value
@@ -23,9 +26,11 @@ const Login = () => {
             setUser(result.user)
             setLoading(false)
             toast.success('Logged in successfully', {position: 'top-center'})
+            navigate(location.state || '/')
+
         })
         .catch(err => {
-            toast.error('Failed to login, try again later', {position: 'top-center'})
+            toast.error('Invalid Email or Password', {position: 'top-center'})
         })
     }
     return (
