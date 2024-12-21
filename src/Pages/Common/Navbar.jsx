@@ -19,9 +19,9 @@ const Navbar = () => {
 
     const links =
         <>
-            <Link to={'/'}> Home </Link>
+            <Link className='mx-3' to={'/'}> Home </Link>
             <Link className='mx-3' to={'/addJob'}> Add jobs </Link>
-            <Link to={'/'}> Home </Link>
+            <Link className='mx-3' to={'/myposts'}> My Post </Link>
         </>
     return (
         <div>

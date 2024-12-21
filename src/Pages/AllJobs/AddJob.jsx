@@ -1,20 +1,24 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../AuthProvider/AuthContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const AddJob = () => {
 
     const { user } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const handleSubmit = e => {
         e.preventDefault()
         const formdata = new FormData(e.target)
         const initialData = Object.fromEntries(formdata)
 
+
         const { min, max, currency, ...newjob } = initialData
         newjob.salaryRange = { min, max, currency }
         newjob.requirements = newjob.requirements.split('\n')
         newjob.responsibilities = newjob.responsibilities.split('\n')
+        newjob.hr_email = user?.email
         console.log(newjob)
 
         fetch('http://localhost:5000/jobs', {
@@ -28,6 +32,7 @@ const AddJob = () => {
             .then(data => {
                 if (data.acknowledged) {
                     toast.success('Job has been posted')
+                    navigate('/myposts')
                 }
             })
     }
@@ -169,14 +174,14 @@ const AddJob = () => {
                             <label className="label">
                                 <span className="label-text">HR Name</span>
                             </label>
-                            <input type="text" placeholder="HR name" name='hrname' className="input input-bordered" required />
+                            <input type="text" placeholder="HR name" name='hr_name' className="input input-bordered" required />
                         </div>
                         {/* hr email */}
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">HR Email</span>
                             </label>
-                            <input type="text" disabled defaultValue={user?.email} name='hremail' className="input input-bordered" required />
+                            <input type="text" disabled defaultValue={user?.email} name='hr_email' className="input input-bordered" required />
                         </div>
                     </div>
 
@@ -185,7 +190,7 @@ const AddJob = () => {
                         <label className="label">
                             <span className="label-text">Application Deadline</span>
                         </label>
-                        <input type="date" name='deadline' className="input input-bordered" required />
+                        <input type="date" name='applicationDeadline' className="input input-bordered" required />
                     </div>
 
                     <div className="form-control mt-6">

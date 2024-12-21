@@ -11,6 +11,7 @@ import { param } from "motion/react-client";
 import PrivateRoute from "../Pages/Private/PrivateRoute";
 import JobApply from "../Pages/AllJobs/JobApply";
 import AddJob from "../Pages/AllJobs/AddJob";
+import MyJobs from "../Pages/AllJobs/MyJobs";
 
 
 const router = createBrowserRouter([
@@ -43,8 +44,16 @@ const router = createBrowserRouter([
             },
             {
                 path: '/addJob',
-                element: <AddJob/>
-            }
+                element: <PrivateRoute><AddJob/></PrivateRoute>
+            },
+            {
+                path: '/myposts',
+                element: <PrivateRoute><MyJobs/></PrivateRoute>
+            },
+            {
+                path: '/addJob',
+                element: <PrivateRoute><AddJob/></PrivateRoute>
+            },
 
 
         ]
