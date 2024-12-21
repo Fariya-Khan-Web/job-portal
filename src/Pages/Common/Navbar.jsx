@@ -13,7 +13,6 @@ const Navbar = () => {
         logout()
             .then(() => {
                 navigate('/')
-                // window.location.reload()
                 toast.success('Logged out successfully', {position: 'top-center'})
             })
     }
@@ -21,7 +20,7 @@ const Navbar = () => {
     const links =
         <>
             <Link to={'/'}> Home </Link>
-            <Link to={'/'}> Home </Link>
+            <Link className='mx-3' to={'/addJob'}> Add jobs </Link>
             <Link to={'/'}> Home </Link>
         </>
     return (

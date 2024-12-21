@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../AuthProvider/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReglottieAni from '../../assets/animation/register-lottie.json'
 import Lottie from 'lottie-react';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 const Register = () => {
 
     const { user, setUser, loginGoogle, createUser, setLoading } = useContext(AuthContext)
+    const navigate = useNavigate()
 
 
     const handleSubmit = e => {
@@ -41,6 +42,7 @@ const Register = () => {
                 setUser(result.user)
                 setLoading(false)
                 toast.success('Registered successfully', {position: 'top-center'})
+                navigate('/')
             })
             .catch(err => {
                 console.log(err)
@@ -56,6 +58,7 @@ const Register = () => {
                 setUser(result.user)
                 setLoading(false)
                 toast.success('logged in successfuly')
+                navigate('/')
             })
             .catch(err => { console.log(err) })
     }
