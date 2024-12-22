@@ -20,6 +20,7 @@ const Navbar = () => {
     const links =
         <>
             <Link className='mx-3' to={'/'}> Home </Link>
+            <Link className='mx-3' to={'/myapplies'}> My Applications </Link>
             <Link className='mx-3' to={'/addJob'}> Add jobs </Link>
             <Link className='mx-3' to={'/myposts'}> My Post </Link>
         </>
@@ -53,7 +54,7 @@ const Navbar = () => {
                         <a className="btn btn-ghost text-xl -ml-4">Job Portal</a>
                     </div>
                 </div>
-                <div className="navbar-center hidden lg:flex">
+                <div className="navbar-center hidden md:flex">
                     <ul className="menu menu-horizontal px-1">
                         {links}
                     </ul>

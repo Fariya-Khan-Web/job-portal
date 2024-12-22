@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../AuthProvider/AuthContext';
 import { h1 } from 'motion/react-client';
 import JobCard from '../Common/JobCard';
+import { Link } from 'react-router-dom';
 
 const MyJobs = () => {
 
@@ -28,6 +29,7 @@ const MyJobs = () => {
                                 <th>Name</th>
                                 <th>Job</th>
                                 <th>Total Application</th>
+                                {/* <th>View Applications</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +40,7 @@ const MyJobs = () => {
                                         <td>{job?.title}</td>
                                         <td>{job?.applicationDeadline}</td>
                                         <td>{job?.application_count}</td>
+                                        <td><Link to={`/viewapplications/${job?._id}`} className='link hover:text-purple-500'>view applications</Link></td>
                                     </tr>
                                 )
                             }
