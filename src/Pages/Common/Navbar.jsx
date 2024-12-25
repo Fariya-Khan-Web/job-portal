@@ -59,6 +59,9 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
+                {
+                    user && <h1>{user.displayName}</h1>
+                }
                 <div className="navbar-end">
                     {
                         user ?

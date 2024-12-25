@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../AuthProvider/AuthContext';
+import axios from 'axios';
 
 const MyApplies = () => {
 
@@ -7,10 +8,18 @@ const MyApplies = () => {
     const [applies, setApplies] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/job_applications?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setApplies(data))
-    }, [user])
+
+        axios.get(`http://localhost:5000/job_applications?email=${user?.email}`, {withCredentials: true})
+        .then(res => {
+            console.log(res.data)
+            setApplies(res.data)
+        })
+
+        // fetch(`http://localhost:5000/job_applications?email=${user?.email}`)
+        //     .then(res => res.json())
+        //     .then(data => setApplies(data))
+    
+        }, [user])
     return (
         <div>
             {applies.length}

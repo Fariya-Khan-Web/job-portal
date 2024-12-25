@@ -4,12 +4,12 @@ import lottieAni from '../../assets/animation/lotti.json'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import AuthContext from '../../AuthProvider/AuthContext';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const Login = () => {
 
     const { setUser, loginEmailPass, setLoading } = useContext(AuthContext)
     const location = useLocation()
-    console.log(location)
     const navigate = useNavigate()
 
     const handleSubmit = e => {
@@ -17,21 +17,25 @@ const Login = () => {
         const form = e.target
         const email = form.email.value
         const password = form.password.value
-        const user = { email, password }
+        const user = { email }
 
         console.log(user)
 
         loginEmailPass(email, password)
-        .then(result => {
-            setUser(result.user)
-            setLoading(false)
-            toast.success('Logged in successfully', {position: 'top-center'})
-            navigate(location.state || '/')
+            .then(result => {
+                setUser(result.user)
+                setLoading(false)
+                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data)
+                    })
+                toast.success('Logged in successfully', { position: 'top-center' })
+                // navigate(location.state || '/')
 
-        })
-        .catch(err => {
-            toast.error('Invalid Email or Password', {position: 'top-center'})
-        })
+            })
+            .catch(err => {
+                toast.error('Invalid Email or Password', { position: 'top-center' })
+            })
     }
     return (
         <div className=' md:flex flex-row-reverse justify-center items-center pb-16 md:py-40'>
@@ -63,7 +67,7 @@ const Login = () => {
                 </form>
                 <p className='mx-auto my-4 -mt-5'>Don't have an account? <Link to={'/register'} className='text-blue-500'>Register</Link></p>
             </div>
-            
+
         </div>
     );
 };
